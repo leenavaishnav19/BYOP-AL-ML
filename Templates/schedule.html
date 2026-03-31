@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>📅 Lecture & Task Scheduler</h2>
+        <span class="badge bg-primary">{{ lectures|length }} Tasks Pending</span>
+    </div>
+
+    <div class="card shadow-sm mb-5 border-0">
+        <div class="card-body bg-light rounded">
+            <h5 class="card-title mb-3 text-muted">Add New Task</h5>
+            <form method="POST" action="/schedule" class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label small fw-bold">Subject</label>
+                    <input type="text" name="subject" class="form-control" placeholder="e.g. Data Science" required>
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label small fw-bold">Topic / Description</label>
+                    <input type="text" name="topic" class="form-control" placeholder="e.g. Linear Regression" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small fw-bold">Batch</label>
+                    <input type="text" name="batch" class="form-control" placeholder="Batch 10-A" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small fw-bold">Deadline Date</label>
+                    <input type="date" name="deadline" class="form-control" required>
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label small fw-bold">Priority (1-High, 5-Low)</label>
+                    <input type="range" name="priority" class="form-range mt-2" min="1" max="5" value="3">
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <button type="submit" class="btn btn-dark w-100 shadow-sm">Add to Schedule</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="ps-4">Subject</th>
+                        <th>Topic</th>
+                        <th>Batch</th>
+                        <th>Deadline</th>
+                        <th>Priority</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lecture in lectures %}
+                    <tr>
+                        <td class="ps-4 fw-bold text-primary">{{ lecture.subject }}</td>
+                        <td>{{ lecture.topic }}</td>
+                        <td><span class="badge bg-info text-dark">{{ lecture.batch }}</span></td>
+                        <td>{{ lecture.deadline.strftime('%d %b, %Y') if lecture.deadline else 'N/A' }}</td>
+                        <td>
+                            {% if lecture.priority|int <= 2 %}
+                                <span class="text-danger">🔥 High</span>
+                            {% else %}
+                                <span class="text-muted">Standard</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ url_for('delete_task', id=lecture.id) }}" class="btn btn-sm btn-outline-success rounded-pill px-3">
+                                ✓ Done
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            {% if not lectures %}
+            <div class="text-center py-5">
+                <h4 class="text-muted">No tasks scheduled. Relax! ☕</h4>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
