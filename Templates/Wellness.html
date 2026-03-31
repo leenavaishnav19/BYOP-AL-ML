@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card p-4 sticky-top" style="top: 20px;">
+                <h3 class="mb-4">🌱 Wellness Log</h3>
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">How are you feeling?</label>
+                        <select name="mood" class="form-select">
+                            <option>Happy 😊</option>
+                            <option>Neutral 😐</option>
+                            <option>Productive 🚀</option>
+                            <option>Tired 😴</option>
+                            <option>Stressed 😟</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Stress Rate (1-10)</label>
+                        <input type="range" name="stress_rate" class="form-range" min="1" max="10" step="1">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Short Note</label>
+                        <textarea name="note" class="form-control" rows="3" placeholder="What's on your mind?"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Log Entry</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <h3 class="mb-4">Past Journals</h3>
+            {% for log in logs %}
+            <div class="card mb-3 border-0 border-start border-4 border-primary shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="text-primary">{{ log.mood }}</h5>
+                        <small class="text-muted">{{ log.date_created.strftime('%Y-%m-%d %H:%M') }}</small>
+                    </div>
+                    <p class="mb-1">{{ log.note }}</p>
+                    <div class="progress" style="height: 10px;">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: {{ log.stress_rate * 10 }}%"></div>
+                    </div>
+                    <small class="text-muted">Stress Level: {{ log.stress_rate }}/10</small>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
