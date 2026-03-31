@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>📊 Attendance Analytics</h2>
+        <a href="/attendance" class="btn btn-outline-primary btn-sm">Mark More Attendance</a>
+    </div>
+
+    <div class="card mb-4 shadow-sm border-0">
+        <div class="card-body">
+            <form method="GET" action="{{ url_for('attendance_report') }}" class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Select Batch to View Report</label>
+                    <select name="batch" class="form-select" onchange="this.form.submit()">
+                        <option value="">-- Choose a Batch --</option>
+                        {% for b in batches %}
+                        <option value="{{ b.batch }}" {% if selected_batch == b.batch %}selected{% endif %}>
+                            {{ b.batch }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ url_for('attendance_report') }}" class="btn btn-light">Clear</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            {% if report %}
+            <table class="table align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Batch</th>
+                        <th>Classes Tracked</th>
+                        <th style="width: 40%;">Attendance Rate</th>
+                        <th>AI Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in report %}
+                    <tr>
+                        <td class="fw-bold">{{ item.name }}</td>
+                        <td><span class="badge bg-secondary">{{ item.batch }}</span></td>
+                        <td>{{ item.total }} Lectures</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="progress flex-grow-1" style="height: 12px;">
+                                    <div class="progress-bar {% if item.percentage >= 75 %}bg-success{% else %}bg-danger{% endif %}"
+                                        role="progressbar" style="width: {{ item.percentage }}%">
+                                    </div>
+                                </div>
+                                <span class="ms-3 fw-bold">{{ item.percentage }}%</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge 
+                                    {% if item.performance == 'Good' %}bg-success
+                                     {% elif item.performance == 'Average' %}bg-warning text-dark
+                                     {% else %}bg-danger{% endif %}">
+                                {{ item.performance }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="text-center py-5">
+                <p class="text-muted">Please select a batch to view the analytics report.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
