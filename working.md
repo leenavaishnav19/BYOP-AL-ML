@@ -18,5 +18,5 @@
 <img width="2862" height="1541" alt="571483815-4acd5aac-d648-4f20-b08a-55fec8222d34" src="https://github.com/user-attachments/assets/01d7ab98-3579-4d3c-81df-a7c3458cd0bf" />
 <img width="2863" height="1535" alt="571484050-6fe31c19-4c07-48d0-af70-0a0f189e37ec" src="https://github.com/user-attachments/assets/c09860e1-2d71-4510-b7d3-ffec2caf115a" />
 
-## Daily Journals(Dairy-Wellness
+## Daily Journals(Dairy-Wellness)
 <img width="2859" height="1529" alt="571484380-06247a56-37cd-4aaa-b36f-614049f454a9" src="https://github.com/user-attachments/assets/352924f8-2a64-4974-9e8f-a837e3823abf" />
