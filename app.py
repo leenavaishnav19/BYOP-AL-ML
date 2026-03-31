@@ -27,7 +27,7 @@ y_stress = stress_data['stress']
 stress_model = DecisionTreeClassifier()
 stress_model.fit(X_stress, y_stress)
 app = Flask(__name__)
-app.secret_key = "saanvi_123"
+app.secret_key = "leena_123"
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///task.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
