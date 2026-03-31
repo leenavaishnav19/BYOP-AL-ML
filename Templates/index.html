@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="container text-center">
+        <h1 class="display-3 fw-bold">ROUTINE PRO</h1>
+        <p class="lead">Manage your lectures, track student attendance, and monitor your wellness in one place.</p>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-7 mb-4">
+            <div id="carouselExampleAutoplaying" class="carousel slide shadow rounded overflow-hidden" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{{url_for('static', filename='4.jpg')}}" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Feature 1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{url_for('static', filename='5.jpg')}}" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Feature 2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{url_for('static', filename='6.jpg')}}" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Feature 3">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card shadow-sm p-4">
+                <h3 class="mb-3">⚡ Quick Task</h3>
+                <h4>🧠 AI Stress Insight:</h4>
+<h5><p class="badge bg-danger">{{ stress_level }}</p></h5>
+                <form method="POST" action="/schedule">
+                    <div class="mb-3">
+                        <label class="form-label">Subject/Task</label>
+                        <input type="text" class="form-control" name="subject" placeholder="e.g., Mathematics" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Topic/Description</label>
+                        <input type="text" class="form-control" name="topic" placeholder="e.g., Algebra Basics" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Batch</label>
+                            <input type="text" class="form-control" name="batch" placeholder="10-A" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Deadline</label>
+                            <input type="date" class="form-control" name="deadline" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="range2" class="form-label">Importance:</label>
+                        <div class="d-flex align-items-center">
+                            <input type="range" class="form-range" name="priority" min="1" max="5" value="3" id="range2">
+                            <span id="current-emoji" class="ms-3 badge bg-light text-dark fs-6" style="min-width: 150px;">😟: Can do later</span>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">Add to Schedule</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mb-5">
+    <div class="row g-4 text-center">
+        <div class="col-md-4">
+            <a href="/schedule" class="text-decoration-none text-dark">
+                <div class="card h-100 p-4 border-0 shadow-sm hover-effect">
+                    <div class="fs-1">📅</div>
+                    <h4>Scheduling</h4>
+                    <p class="text-muted">Organize your topics and batches effortlessly.</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="/attendance" class="text-decoration-none text-dark">
+                <div class="card h-100 p-4 border-0 shadow-sm hover-effect">
+                    <div class="fs-1">👨‍🏫</div>
+                    <h4>Attendance</h4>
+                    <p class="text-muted">Quick digital roll-call with batch filtering.</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="/wellness" class="text-decoration-none text-dark">
+                <div class="card h-100 p-4 border-0 shadow-sm hover-effect">
+                    <div class="fs-1">🌱</div>
+                    <h4>Wellness</h4>
+                    <p class="text-muted">Track your stress levels and daily mood.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const rangeSlider = document.getElementById('range2');
+    const emojiDisplay = document.getElementById('current-emoji');
+    const emojiMap = {
+        '1': '😇: Top Priority',
+        '2': '😌: Within time',
+        '3': '😐: Necessary',
+        '4': '😟: Can do later',
+        '5': '🔥: Depends on Mood'
+    };
+
+    rangeSlider.addEventListener('input', () => {
+        emojiDisplay.textContent = emojiMap[rangeSlider.value];
+    });
+</script>
+
+<style>
+    .hover-effect:hover {
+        background-color: #f1f4ff;
+        transform: translateY(-5px);
+        transition: 0.3s;
+    }
+</style>
+{% endblock %}
